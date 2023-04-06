@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace Kursovaya
 {
@@ -29,10 +31,26 @@ namespace Kursovaya
 
     public partial class MainWindow : Window
     {
+        static readonly HttpClient client = new HttpClient();
+
         public MainWindow()
         {
             InitializeComponent();
-            
+
+            string apiKey = "7235fb8523a840e9979bd25faff57198";
+            string url = "https://api.football-data.org/v4/matches";
+
+            client.DefaultRequestHeaders.Add("X-Auth-Token", apiKey);
+
+            HttpResponseMessage response = client.GetAsync(url).Result;
+
+            if (response.IsSuccessStatusCode) {
+                string responseBody = response.Content.ReadAsStringAsync().Result;
+
+                dynamic data = JsonConvert.DeserializeObject(responseBody);
+            } else {
+                Console.WriteLine($"Error: {response.StatusCode}");
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
