@@ -12,24 +12,24 @@
         <Button Content="Мои ставки" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Top"/>
         <DataGrid Margin="0,70,0,0" x:Name="biba">
             <DataGrid.Columns>
-                <DataGridTextColumn MinWidth="250" Header="Матч" Binding="{Binding Path=Game}" >
+                <DataGridTextColumn MinWidth="250" Header="Матч" Binding="{Binding Path=Game}" IsReadOnly="True" >
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn MinWidth="100" Header="Дата" Binding="{Binding Path=Date}" >
+                <DataGridTextColumn MinWidth="100" Header="Дата" Binding="{Binding Path=Date}" IsReadOnly="True" >
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn Header="Победа первой">
+                <DataGridTemplateColumn Header="Победа первой" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button Content="{Binding Path=FirstWin}"/>
+                            <Button Content="{Binding Path=FirstWin}" Click="HomeWin"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.HeaderStyle>
@@ -38,7 +38,7 @@
                         </Style>
                     </DataGridTemplateColumn.HeaderStyle>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Ничья">
+                <DataGridTemplateColumn Header="Ничья" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="{Binding Path=Spare}"/>
@@ -50,7 +50,7 @@
                         </Style>
                     </DataGridTemplateColumn.HeaderStyle>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Победа второй">
+                <DataGridTemplateColumn Header="Победа второй" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button Content="{Binding Path=SecondWin}"/>
@@ -63,9 +63,6 @@
                     </DataGridTemplateColumn.HeaderStyle>
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
-            <DataGrid.Items>
-                <local:Row Game="Торпедо - Локоматив" Date="07.04.2023" FirstWin="6.66" Spare="5.55" SecondWin="3.33"/>
-            </DataGrid.Items>
         </DataGrid>
     </Grid>
 </Window>

@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Kursovaya
 {
@@ -38,23 +39,103 @@ namespace Kursovaya
             InitializeComponent();
 
             string apiKey = "7235fb8523a840e9979bd25faff57198";
-            string url = "https://api.football-data.org/v4/matches";
+            //string url = "https://api.football-data.org/v4/matches";
+            string url = "https://api.football-data.org/v4/competitions/CL/matches?status=SCHEDULED";
 
             client.DefaultRequestHeaders.Add("X-Auth-Token", apiKey);
 
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            if (response.IsSuccessStatusCode) {
-                string responseBody = response.Content.ReadAsStringAsync().Result;
-
-                dynamic data = JsonConvert.DeserializeObject(responseBody);
-            } else {
+            if (!response.IsSuccessStatusCode) {
                 Console.WriteLine($"Error: {response.StatusCode}");
             }
+
+            addRowsToDatagrid(JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
+
+            url = "https://api.football-data.org/v4/competitions/BL1/matches?status=SCHEDULED";
+
+            response = client.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Error: {response.StatusCode}");
+            }
+
+            addRowsToDatagrid(JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
+
+            url = "https://api.football-data.org/v4/competitions/SA/matches?status=SCHEDULED";
+
+            response = client.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Error: {response.StatusCode}");
+            }
+
+            addRowsToDatagrid(JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
+
+            url = "https://api.football-data.org/v4/competitions/PD/matches?status=SCHEDULED";
+
+            response = client.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Error: {response.StatusCode}");
+            }
+
+            addRowsToDatagrid(JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
+
+            url = "https://api.football-data.org/v4/competitions/DED/matches?status=SCHEDULED";
+
+            response = client.GetAsync(url).Result;
+
+            if (!response.IsSuccessStatusCode)
+            {
+                Console.WriteLine($"Error: {response.StatusCode}");
+            }
+
+            addRowsToDatagrid(JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
+        }
+
+        private void addRowsToDatagrid(dynamic values)
+        {
+            string matchName, date, homeWin, draw, awayWin;
+
+            foreach (dynamic match in values.matches) {
+
+                matchName = (string)match.homeTeam.name + " - " + (string)match.awayTeam.name;
+                date = (string)match.utcDate;
+                homeWin = (string)match.odds.homeWin;
+                draw = (string)match.odds.draw;
+                awayWin = (string)match.odds.awayWin;
+
+                if (matchName == null || date == null || homeWin == null || draw == null || awayWin == null) {
+                    continue;
+                }
+
+                biba.Items.Add(new Row { Game = matchName, Date = date, FirstWin = homeWin, Spare = draw, SecondWin = awayWin });
+            }
+        }
+
+        protected static object getValueFromObjectByName(object source, string propertyName)
+        {
+            return source.GetType().GetProperty(propertyName).GetValue(source, null);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
+
+        }
+
+        private void HomeWin(object sender, RoutedEventArgs e)
+        {
+            Row r = ((FrameworkElement)sender).DataContext as Row;
+
+            Button button = sender as Button;
+
+            Bet b = new Bet(r.Game, r.Date, button.Content.ToString());
+            b.Owner = this;
+            b.ShowDialog();
 
         }
     }
