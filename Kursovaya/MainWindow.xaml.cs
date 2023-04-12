@@ -28,6 +28,8 @@ namespace Kursovaya
         public string FirstWin { get; set; }
         public string Spare { get; set; }
         public string SecondWin { get; set; }
+        public string HomeTeam { get; set; }
+        public string AwayTeam { get; set; }
     }
 
     public partial class MainWindow : Window
@@ -113,7 +115,7 @@ namespace Kursovaya
                     continue;
                 }
 
-                biba.Items.Add(new Row { Game = matchName, Date = date, FirstWin = homeWin, Spare = draw, SecondWin = awayWin });
+                biba.Items.Add(new Row { Game = matchName, Date = date, FirstWin = homeWin, Spare = draw, SecondWin = awayWin, HomeTeam = (string)match.homeTeam.name, AwayTeam = (string)match.awayTeam.name });
             }
         }
 
@@ -133,7 +135,7 @@ namespace Kursovaya
 
             Button button = sender as Button;
 
-            Bet b = new Bet(r.Game, r.Date, button.Content.ToString());
+            Bet b = new Bet((button.Name == "_1") ? r.HomeTeam : r.Game, r.Date, button.Content.ToString());
             b.Owner = this;
             b.ShowDialog();
 
