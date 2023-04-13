@@ -129,13 +129,19 @@ namespace Kursovaya
 
         }
 
-        private void HomeWin(object sender, RoutedEventArgs e)
+        private void betButton(object sender, RoutedEventArgs e)
         {
             Row r = ((FrameworkElement)sender).DataContext as Row;
 
             Button button = sender as Button;
 
-            Bet b = new Bet((button.Name == "_1") ? r.HomeTeam : r.Game, r.Date, button.Content.ToString());
+            Bet b = new Bet(
+                (button.Name == "_1") ? r.HomeTeam : 
+                (button.Name == "_3") ? r.AwayTeam :
+                "Ничья",
+                r.Date, 
+                button.Content.ToString()
+            );
             b.Owner = this;
             b.ShowDialog();
 

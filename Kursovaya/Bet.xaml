@@ -13,9 +13,9 @@
         <Label x:Name="_ratio" Content="Коэфициент placeholder" FontSize="18" Margin="0, 120, 0, 0"/>
         <Label Content="Сумма ставки:" FontSize="18" Margin="0, 160, 0, 0" />
         <Border BorderThickness="1" Width="100" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" BorderBrush="Black" Margin="130, 160, 0, 0">
-            <TextBox Width="100" Height="30" FontSize="18" Background="LightGray" IsEnabled="True"/>
+            <TextBox PreviewTextInput="NumValidation" Width="100" Height="30" FontSize="18" Background="LightGray" IsEnabled="True" TextChanged="moneyBoxKeyDown"/>
         </Border>
-
+        <Label x:Name="sum" Content="Возможный выигрыш: 0" FontSize="18" Margin="0, 200, 0, 0"/>
         <Button Content="Сделать ставку" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 0, 0, 10"/>
     </Grid>
 </Window>
