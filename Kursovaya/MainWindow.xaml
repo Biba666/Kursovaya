@@ -7,7 +7,8 @@
         mc:Ignorable="d"
         Title="Футбольные ставки" Height="450" Width="800">
     <Grid Margin="40,40,40,40">
-        <Label Content="Текущий баланс: " HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="_userName" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
+        <Label Content="Текущий баланс: " HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top"/>
         <Button Content="Пополнить" HorizontalAlignment="Right" Margin="0,0,100,0" VerticalAlignment="Top" Click="Button_Click"/>
         <Button Content="Мои ставки" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Top"/>
         <DataGrid Margin="0,70,0,0" x:Name="biba">
@@ -29,7 +30,7 @@
                 <DataGridTemplateColumn Header="Победа первой" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="_1" Content="{Binding Path=FirstWin}" Click="betButton"/>
+                            <Button x:Name="HomeTeam" Content="{Binding Path=FirstWin}" Click="betButton"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.HeaderStyle>
@@ -41,7 +42,7 @@
                 <DataGridTemplateColumn Header="Ничья" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="_2" Content="{Binding Path=Spare}" Click="betButton"/>
+                            <Button x:Name="Draw" Content="{Binding Path=Spare}" Click="betButton"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.HeaderStyle>
@@ -53,7 +54,7 @@
                 <DataGridTemplateColumn Header="Победа второй" IsReadOnly="True">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="_3" Content="{Binding Path=SecondWin}" Click="betButton"/>
+                            <Button x:Name="AwayTeam" Content="{Binding Path=SecondWin}" Click="betButton"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                     <DataGridTemplateColumn.HeaderStyle>

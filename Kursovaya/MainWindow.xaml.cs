@@ -23,6 +23,7 @@ namespace Kursovaya
     /// </summary>
     public class Row
     {
+        public int GameId { get; set; }
         public string Game { get; set; }
         public string Date { get; set; }
         public string FirstWin { get; set; }
@@ -39,6 +40,8 @@ namespace Kursovaya
         public MainWindow()
         {
             InitializeComponent();
+
+            _userName.Content = new DatabaseConnection().GetUsername("buba");
 
             string apiKey = "7235fb8523a840e9979bd25faff57198";
             //string url = "https://api.football-data.org/v4/matches";
@@ -102,6 +105,7 @@ namespace Kursovaya
         private void addRowsToDatagrid(dynamic values)
         {
             string matchName, date, homeWin, draw, awayWin;
+            int gameId;
 
             foreach (dynamic match in values.matches) {
 
@@ -110,12 +114,13 @@ namespace Kursovaya
                 homeWin = (string)match.odds.homeWin;
                 draw = (string)match.odds.draw;
                 awayWin = (string)match.odds.awayWin;
+                gameId = match.id.ToObject<int>();
 
                 if (matchName == null || date == null || homeWin == null || draw == null || awayWin == null) {
                     continue;
                 }
 
-                biba.Items.Add(new Row { Game = matchName, Date = date, FirstWin = homeWin, Spare = draw, SecondWin = awayWin, HomeTeam = (string)match.homeTeam.name, AwayTeam = (string)match.awayTeam.name });
+                biba.Items.Add(new Row { GameId = gameId, Game = matchName, Date = date, FirstWin = homeWin, Spare = draw, SecondWin = awayWin, HomeTeam = (string)match.homeTeam.name, AwayTeam = (string)match.awayTeam.name });
             }
         }
 
@@ -136,14 +141,17 @@ namespace Kursovaya
             Button button = sender as Button;
 
             Bet b = new Bet(
-                (button.Name == "_1") ? r.HomeTeam : 
-                (button.Name == "_3") ? r.AwayTeam :
+                r.GameId,
+                button.Name,
+                (button.Name == "HomeTeam") ? r.HomeTeam :
+                (button.Name == "AwayTeam") ? r.AwayTeam :
                 "Ничья",
-                r.Date, 
+                r.Date,
                 button.Content.ToString()
-            );
-            b.Owner = this;
-            b.ShowDialog();
+            ) {
+                Owner = this
+            };
+            _ = b.ShowDialog();
 
         }
     }

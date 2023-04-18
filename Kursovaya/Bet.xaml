@@ -16,6 +16,6 @@
             <TextBox PreviewTextInput="NumValidation" Width="100" Height="30" FontSize="18" Background="LightGray" IsEnabled="True" TextChanged="moneyBoxKeyDown"/>
         </Border>
         <Label x:Name="sum" Content="Возможный выигрыш: 0" FontSize="18" Margin="0, 200, 0, 0"/>
-        <Button Content="Сделать ставку" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 0, 0, 10"/>
+        <Button Content="Сделать ставку" Click="MakeBet" FontSize="18" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0, 0, 0, 10"/>
     </Grid>
 </Window>
