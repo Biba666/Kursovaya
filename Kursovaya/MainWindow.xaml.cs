@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Net.Http;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Kursovaya
 {
@@ -42,6 +43,7 @@ namespace Kursovaya
             InitializeComponent();
 
             _userName.Content = new DatabaseConnection().GetUsername("buba");
+            _balance.Content += new DatabaseConnection().GetBalance("buba").ToString();
 
             string apiKey = "7235fb8523a840e9979bd25faff57198";
             //string url = "https://api.football-data.org/v4/matches";
@@ -147,11 +149,20 @@ namespace Kursovaya
                 (button.Name == "AwayTeam") ? r.AwayTeam :
                 "Ничья",
                 r.Date,
-                button.Content.ToString()
+                button.Content.ToString(),
+                float.Parse(_balance.Content.ToString()[16..])
             ) {
                 Owner = this
             };
-            _ = b.ShowDialog();
+
+            bool? biba = b.ShowDialog();
+
+            if (biba == true)
+            {
+                _ = new DatabaseConnection().RunCommand("UPDATE public.user u SET balance = " + b._balance.ToString("F2", CultureInfo.InvariantCulture) + " WHERE u.login = 'buba';");
+
+                _balance.Content = "Баланс: " + b._balance.ToString();
+            }
 
         }
     }

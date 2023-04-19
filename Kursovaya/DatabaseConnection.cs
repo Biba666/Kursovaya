@@ -53,5 +53,33 @@ namespace Kursovaya
             return data;
 
         }
+
+        public float GetBalance(string login)
+        {
+            conn.Open();
+
+            if (conn.State == System.Data.ConnectionState.Broken)
+            {
+                return -1;
+            }
+
+            NpgsqlDataReader ndr = new NpgsqlCommand(
+                "SELECT u.balance " +
+                "FROM public.user u " +
+                "WHERE u.login = '" + login + "';",
+                conn
+            ).ExecuteReader();
+
+            if (!ndr.Read())
+            {
+                return -1;
+            }
+
+            float data = (float)ndr.GetDouble(0);
+
+            conn.Close();
+
+            return data;
+        }
     }
 }

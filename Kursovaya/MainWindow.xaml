@@ -8,7 +8,7 @@
         Title="Футбольные ставки" Height="450" Width="800">
     <Grid Margin="40,40,40,40">
         <Label x:Name="_userName" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
-        <Label Content="Текущий баланс: " HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top"/>
+        <Label x:Name="_balance" Content="Текущий баланс: " HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top"/>
         <Button Content="Пополнить" HorizontalAlignment="Right" Margin="0,0,100,0" VerticalAlignment="Top" Click="Button_Click"/>
         <Button Content="Мои ставки" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Top"/>
         <DataGrid Margin="0,70,0,0" x:Name="biba">

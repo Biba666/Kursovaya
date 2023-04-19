@@ -20,10 +20,11 @@ namespace Kursovaya
     /// </summary>
     public partial class Bet : Window
     {
-        private int _gameId;
-        private string _side;
+        private readonly int _gameId;
+        private readonly string _side;
+        public float _balance;
 
-        public Bet(int gameId, string side, string teamName, string matchDate, string ratio)
+        public Bet(int gameId, string side, string teamName, string matchDate, string ratio, float balance)
         {
             InitializeComponent();
 
@@ -32,6 +33,7 @@ namespace Kursovaya
             _team.Content = teamName;
             _date.Content = matchDate;
             _ratio.Content = ratio;
+            _balance = balance;
         }
 
         private void moneyBoxKeyDown(object sender, TextChangedEventArgs e)
@@ -56,16 +58,27 @@ namespace Kursovaya
 
         private void MakeBet(object sender, RoutedEventArgs e)
         {
-            string sumText = sum.Content.ToString().Substring(6);
+            string sumText = sum.Content.ToString().Substring(7);
 
-            if (sumText == "0")
+            _balance -= float.Parse(_money.Text, CultureInfo.InvariantCulture.NumberFormat);
+
+            if (sumText == "0") 
+            {
                 return;
+            }
+            else if (_balance < 0)
+            {
+                _ = MessageBox.Show("Недостаточно денег!");
+                return;
+            }
 
             DatabaseConnection dc = new DatabaseConnection();
             dc.RunCommand(
                 "INSERT INTO public.bet(user_id,game_id,side,amount)" +
                 "VALUES (1," + _gameId + ",'" + _side + "','" + sumText + "'::float);"
             );
+
+            DialogResult = true;
 
             Close();
         }
