@@ -54,7 +54,7 @@ namespace Kursovaya
             e.Handled = !regex.IsMatch(((TextBox)sender).Text + e.Text);
         }
 
-        private readonly Regex regex = new Regex(@"^[0-9]+(,|.)?[0-9]?[0-9]?$");
+        private readonly Regex regex = new(@"^[0-9]+(,|.)?[0-9]?[0-9]?$");
 
         private void MakeBet(object sender, RoutedEventArgs e)
         {

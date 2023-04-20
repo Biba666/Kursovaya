@@ -1,0 +1,18 @@
+﻿<Window x:Class="Kursovaya.DepositMoney"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Kursovaya"
+        mc:Ignorable="d"
+        Title="DepositMoney" Height="450" Width="800">
+    <Grid>
+        <Label Content="Пополнение баланса" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,40,0,0" FontSize="24"/>
+        <Grid Margin="20,92,20,98">
+            <Label x:Name="_balance" Content="Ваш баланс: " HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,10,0,0" FontSize="15"/>
+            <Label Content="Сумма пополнения:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,50,0,0" FontSize="15"/>
+            <TextBox x:Name="_value" PreviewTextInput="NumValidator" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="175,50,0,0" Width="100" Height="30" FontSize="15" />
+        </Grid>
+        <Button Click="MakeDeposit" Content="Пополнить" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0,0,0,40" Height="40" Width="100"/>
+    </Grid>
+</Window>

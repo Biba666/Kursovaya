@@ -38,12 +38,15 @@ namespace Kursovaya
     {
         static readonly HttpClient client = new HttpClient();
 
+        private float balance;
+
         public MainWindow()
         {
             InitializeComponent();
 
             _userName.Content = new DatabaseConnection().GetUsername("buba");
-            _balance.Content += new DatabaseConnection().GetBalance("buba").ToString();
+            balance = new DatabaseConnection().GetBalance("buba");
+            _balance.Content += balance.ToString();
 
             string apiKey = "7235fb8523a840e9979bd25faff57198";
             //string url = "https://api.football-data.org/v4/matches";
@@ -122,7 +125,7 @@ namespace Kursovaya
                     continue;
                 }
 
-                biba.Items.Add(new Row { GameId = gameId, Game = matchName, Date = date, FirstWin = homeWin, Spare = draw, SecondWin = awayWin, HomeTeam = (string)match.homeTeam.name, AwayTeam = (string)match.awayTeam.name });
+                _ = biba.Items.Add(new Row { GameId = gameId, Game = matchName, Date = date, FirstWin = homeWin, Spare = draw, SecondWin = awayWin, HomeTeam = (string)match.homeTeam.name, AwayTeam = (string)match.awayTeam.name });
             }
         }
 
@@ -131,9 +134,18 @@ namespace Kursovaya
             return source.GetType().GetProperty(propertyName).GetValue(source, null);
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Deposit(object sender, RoutedEventArgs e)
         {
+            DepositMoney dm = new(balance)
+            {
+                Owner = this
+            };
 
+            if (dm.ShowDialog() == true)
+            {
+                balance = new DatabaseConnection().GetBalance("buba");
+                _balance.Content = "Текущий баланс: " + balance.ToString();
+            }
         }
 
         private void betButton(object sender, RoutedEventArgs e)
@@ -150,18 +162,18 @@ namespace Kursovaya
                 "Ничья",
                 r.Date,
                 button.Content.ToString(),
-                float.Parse(_balance.Content.ToString()[16..])
+                balance
             ) {
                 Owner = this
             };
 
-            bool? biba = b.ShowDialog();
-
-            if (biba == true)
+            if (b.ShowDialog() == true)
             {
-                _ = new DatabaseConnection().RunCommand("UPDATE public.user u SET balance = " + b._balance.ToString("F2", CultureInfo.InvariantCulture) + " WHERE u.login = 'buba';");
+                _ = new DatabaseConnection().UpdateBalance(b._balance);
 
-                _balance.Content = "Баланс: " + b._balance.ToString();
+                balance = b._balance;
+
+                _balance.Content = "Текущий баланс: " + b._balance.ToString();
             }
 
         }

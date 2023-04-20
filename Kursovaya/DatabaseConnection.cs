@@ -25,6 +25,64 @@ namespace Kursovaya
             return true;
         }
 
+        public bool AddMoney(float money)
+        {
+            conn.Open();
+
+            if (conn.State == System.Data.ConnectionState.Broken)
+            {
+                return false;
+            }
+
+            _ = new NpgsqlCommand("UPDATE public.user SET balance = balance + round(@money::numeric, 2) WHERE login = @login;", conn)
+            {
+                Parameters =
+                {
+                    new("money", NpgsqlTypes.NpgsqlDbType.Real)
+                    {
+                        Value = money
+                    },
+                    new("login", NpgsqlTypes.NpgsqlDbType.Varchar)
+                    {
+                        Value = "buba"
+                    }
+                }
+            }.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+
+        public bool UpdateBalance(float money)
+        {
+            conn.Open();
+
+            if (conn.State == System.Data.ConnectionState.Broken)
+            {
+                return false;
+            }
+
+            _ = new NpgsqlCommand("UPDATE public.user u SET balance = round(@money::numeric, 2) WHERE u.login = @login;", conn)
+            {
+                Parameters =
+                {
+                    new("money", NpgsqlTypes.NpgsqlDbType.Real)
+                    {
+                        Value = money
+                    },
+                    new("login", NpgsqlTypes.NpgsqlDbType.Varchar)
+                    {
+                        Value = "buba"
+                    }
+                }
+            }.ExecuteNonQuery();
+
+            conn.Close();
+
+            return true;
+        }
+
         public string GetUsername(string login)
         {
             conn.Open();
