@@ -58,22 +58,21 @@ namespace Kursovaya
 
         private void MakeBet(object sender, RoutedEventArgs e)
         {
-            string sumText = sum.Content.ToString().Substring(7);
+            string sumText = sum.Content.ToString()[7..];
 
-            _balance -= float.Parse(_money.Text, CultureInfo.InvariantCulture.NumberFormat);
+            float balance = _balance - float.Parse(_money.Text, CultureInfo.InvariantCulture.NumberFormat);
 
-            if (sumText == "0") 
+            if (sumText == "0")
             {
                 return;
             }
-            else if (_balance < 0)
+            else if (balance < 0)
             {
                 _ = MessageBox.Show("Недостаточно денег!");
                 return;
             }
 
-            DatabaseConnection dc = new DatabaseConnection();
-            dc.RunCommand(
+            _ = new DatabaseConnection().RunCommand(
                 "INSERT INTO public.bet(user_id,game_id,side,amount)" +
                 "VALUES (1," + _gameId + ",'" + _side + "','" + sumText + "'::float);"
             );

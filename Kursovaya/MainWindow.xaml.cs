@@ -36,7 +36,7 @@ namespace Kursovaya
 
     public partial class MainWindow : Window
     {
-        static readonly HttpClient client = new HttpClient();
+        static readonly HttpClient client = new();
 
         private float balance;
 

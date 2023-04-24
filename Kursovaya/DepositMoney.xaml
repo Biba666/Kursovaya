@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Kursovaya"
         mc:Ignorable="d"
-        Title="DepositMoney" Height="450" Width="800">
+        Title="" Height="450" Width="800">
     <Grid>
         <Label Content="Пополнение баланса" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,40,0,0" FontSize="24"/>
         <Grid Margin="20,92,20,98">
