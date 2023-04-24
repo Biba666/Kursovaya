@@ -10,24 +10,24 @@
         <Label x:Name="_userName" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0"/>
         <Label x:Name="_balance" Content="Текущий баланс: " HorizontalAlignment="Left" Margin="0,15,0,0" VerticalAlignment="Top"/>
         <Button Content="Пополнить" HorizontalAlignment="Right" Margin="0,0,100,0" VerticalAlignment="Top" Click="Deposit"/>
-        <Button Content="Мои ставки" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Top"/>
+        <Button Content="Мои ставки" HorizontalAlignment="Right" Margin="0,0,0,0" VerticalAlignment="Top" Click="BetHistory"/>
         <DataGrid Margin="0,70,0,0" x:Name="biba">
             <DataGrid.Columns>
-                <DataGridTextColumn MinWidth="250" Header="Матч" Binding="{Binding Path=Game}" IsReadOnly="True" >
+                <DataGridTextColumn MinWidth="300" Header="Матч" Binding="{Binding Path=Game}" IsReadOnly="True" CanUserResize="False">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn MinWidth="100" Header="Дата" Binding="{Binding Path=Date}" IsReadOnly="True" >
+                <DataGridTextColumn MinWidth="100" Header="Дата" Binding="{Binding Path=Date}" IsReadOnly="True"  CanUserResize="False">
                     <DataGridTextColumn.HeaderStyle>
                         <Style TargetType="DataGridColumnHeader">
                             <Setter Property="HorizontalContentAlignment" Value="Center"/>
                         </Style>
                     </DataGridTextColumn.HeaderStyle>
                 </DataGridTextColumn>
-                <DataGridTemplateColumn Header="Победа первой" IsReadOnly="True">
+                <DataGridTemplateColumn Header="Победа первой" IsReadOnly="True" CanUserResize="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="HomeTeam" Content="{Binding Path=FirstWin}" Click="betButton"/>
@@ -39,7 +39,7 @@
                         </Style>
                     </DataGridTemplateColumn.HeaderStyle>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Ничья" IsReadOnly="True">
+                <DataGridTemplateColumn Header="Ничья" IsReadOnly="True" CanUserResize="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="Draw" Content="{Binding Path=Spare}" Click="betButton"/>
@@ -51,7 +51,7 @@
                         </Style>
                     </DataGridTemplateColumn.HeaderStyle>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="Победа второй" IsReadOnly="True">
+                <DataGridTemplateColumn Header="Победа второй" IsReadOnly="True" CanUserResize="False">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <Button x:Name="AwayTeam" Content="{Binding Path=SecondWin}" Click="betButton"/>

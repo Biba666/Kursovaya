@@ -49,57 +49,13 @@ namespace Kursovaya
             _balance.Content += balance.ToString();
 
             string apiKey = "7235fb8523a840e9979bd25faff57198";
-            //string url = "https://api.football-data.org/v4/matches";
-            string url = "https://api.football-data.org/v4/competitions/CL/matches?status=SCHEDULED";
+            string url = "https://api.football-data.org/v4/matches?status=SCHEDULED";
 
             client.DefaultRequestHeaders.Add("X-Auth-Token", apiKey);
 
             HttpResponseMessage response = client.GetAsync(url).Result;
 
-            if (!response.IsSuccessStatusCode) {
-                Console.WriteLine($"Error: {response.StatusCode}");
-            }
-
-            addRowsToDatagrid(JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
-
-            url = "https://api.football-data.org/v4/competitions/BL1/matches?status=SCHEDULED";
-
-            response = client.GetAsync(url).Result;
-
-            if (!response.IsSuccessStatusCode)
-            {
-                Console.WriteLine($"Error: {response.StatusCode}");
-            }
-
-            addRowsToDatagrid(JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
-
-            url = "https://api.football-data.org/v4/competitions/SA/matches?status=SCHEDULED";
-
-            response = client.GetAsync(url).Result;
-
-            if (!response.IsSuccessStatusCode)
-            {
-                Console.WriteLine($"Error: {response.StatusCode}");
-            }
-
-            addRowsToDatagrid(JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
-
-            url = "https://api.football-data.org/v4/competitions/PD/matches?status=SCHEDULED";
-
-            response = client.GetAsync(url).Result;
-
-            if (!response.IsSuccessStatusCode)
-            {
-                Console.WriteLine($"Error: {response.StatusCode}");
-            }
-
-            addRowsToDatagrid(JsonConvert.DeserializeObject(response.Content.ReadAsStringAsync().Result));
-
-            url = "https://api.football-data.org/v4/competitions/DED/matches?status=SCHEDULED";
-
-            response = client.GetAsync(url).Result;
-
-            if (!response.IsSuccessStatusCode)
+            if (!response.IsSuccessStatusCode) 
             {
                 Console.WriteLine($"Error: {response.StatusCode}");
             }
@@ -176,6 +132,14 @@ namespace Kursovaya
                 _balance.Content = "Текущий баланс: " + b._balance.ToString();
             }
 
+        }
+
+        private void BetHistory(object sender, RoutedEventArgs e)
+        {
+            _ = new History()
+            {
+                Owner = this
+            }.ShowDialog();
         }
     }
 }
